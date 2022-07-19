@@ -1,0 +1,13 @@
+#Para esta actividad se importarán las siguientes librerías:
+import pandas as pd
+
+#Código para cargar el Dataset
+dsR = pd.read_csv('Real estate.csv')
+#Vista de cabezera y primneros 5 datos de Dataset
+dsR.head()
+
+#Transformación de arreglo a dataFrame
+dfsR = pd.DataFrame(dsR)
+y = df['Y house price of unit area']
+#Descripción estadistica de la caracteristica precio de casa por área
+y.describe()
