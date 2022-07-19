@@ -11,3 +11,23 @@ dfsR = pd.DataFrame(dsR)
 y = df['Y house price of unit area']
 #Descripción estadistica de la caracteristica precio de casa por área
 y.describe()
+
+#Media del precio de casa por área por la edad de la casa.
+mediaAge = dfsR.groupby(['Y house price of unit area']).agg({'X2 house age': 'mean'}).reset_index()
+mediaAge
+
+#Media del precio de casa por área por la distancia en metros de la estación de metro más cercana 
+mediaDist = dfsR.groupby(['Y house price of unit area']).agg({'X3 distance to the nearest MRT station': 'mean'}).reset_index()
+mediaDist 
+
+#Media del precio de casa por área por el numero de tiendas cercanas 
+mediaStores = dfsR.groupby(['Y house price of unit area']).agg({'X4 number of convenience stores': 'mean'}).reset_index()
+mediaStores
+
+#Media del precio de casa por área por latitude de la casa
+mediaLat= dfsR.groupby(['Y house price of unit area']).agg({'X5 latitude': 'mean'}).reset_index()
+mediaLat 
+
+#Media del precio de casa por área por longitude de la casa
+medialONG = dfsR.groupby(['Y house price of unit area']).agg({'X6 longitude': 'mean'}).reset_index()
+medialONG 
