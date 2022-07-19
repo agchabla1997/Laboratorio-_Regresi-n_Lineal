@@ -31,3 +31,53 @@ mediaLat
 #Media del precio de casa por área por longitude de la casa
 medialONG = dfsR.groupby(['Y house price of unit area']).agg({'X6 longitude': 'mean'}).reset_index()
 medialONG 
+
+#Transformación de las caracteristicas (mire el apartado Feature engineering del aula virtual)
+# Variable objetivo y variables de entrada
+columnasx = ['X1 transaction date','X2 house age','X3 distance to the nearest MRT station','X4 number of convenience stores','X5 latitude','X6 longitude']
+# Se asigna la variable x y la variable y en función a las columnas del dataset
+VariableX = dfsR[columnasx] 
+#visualización de columnas de variable x
+print(VariableX)
+columnay = ['Y house price of unit area']
+Variabley = dfsR[columnay] 
+#visualización de la coluna de variable y
+print(Variabley)
+
+### Estandarización de la data ###
+from sklearn.preprocessing import StandardScaler
+#Se estandariza las características de entrada eliminando la media y escalando a la varianza unitaria.
+VariablesEntradaScaler=StandardScaler()
+#Se estandariza las característica objetivo eliminando la media y escalando a la varianza unitaria
+VariableObjetivoScaler=StandardScaler()
+
+#Almacenamiento del objeto de ajuste para referencia posterior
+VariablesEntradaFit=VariablesEntradaScaler.fit(VariableX)
+VariableObjetivoFit=VariableObjetivoScaler.fit(Variabley)
+
+#Generación de los valores estandarizados de X e y
+#Ajusta a los datos de "x" y luego los transforma.
+X=VariablesEntradaFit.transform(VariableX)
+#Ajusta a los datos de "y" y luego los transforma.
+y=VariableObjetivoFit.transform(Variabley)
+
+#Código que realice la división en entrenamiento y test, de acuerdo con la estretgia de evaluación planeada. Describa cuál es.
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+#Division de los datos en un conjunto de datos de prueba y entrenamiento. 
+x_train,x_test,y_train,y_test=train_test_split(X,y,train_size=0.7,random_state=3)
+
+
+#Código del modelo
+#Definición de Modelo de Regresión lineal
+lr_modelo = LinearRegression()
+
+#Entrenamiento
+model_fit = lr_modelo.fit(x_train,y_train)
+
+#Test
+#Métricas de evaluación para el set de entrenamiento y de testeo. 
+y_predict = lr_modelo.predict(x_test)
+#Visualización de la calidad de modelo sobre los datos de testeo.
+print(model_fit.score(x_test,y_test,))
+
